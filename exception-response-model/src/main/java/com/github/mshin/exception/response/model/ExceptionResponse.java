@@ -9,37 +9,64 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author MunChul Shin
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({
+    "httpStatus",
+    "type",
+    "description",
+    "location",
+    "technicalDetails",
+    "moreInfo"
+})
+
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class ExceptionResponse extends RuntimeException implements Serializable {
 
     private static final long serialVersionUID = -1937492209174401689L;
 
+    @JsonProperty("httpStatus")
+    @JsonPropertyDescription("The HTTP status type")
     @XmlElement
     @ApiModelProperty(required = true, value = "The HTTP status type", example = "200")
     private Response.Status httpStatus;
 
+    @JsonProperty("type")
+    @JsonPropertyDescription("Error type that describes the error.")
     @XmlElement
     @ApiModelProperty(required = true, value = "Error type that describes the error. Always returned to the caller.", example = "validationFailure OR invalidRequest OR serverError")
     private String type;
 
+    @JsonProperty("description")
+    @JsonPropertyDescription("Human readable description of the exception.")
     @XmlElement
     @ApiModelProperty(required = false, value = "Human readable description of the exception. If available, returned to the caller.", example = "Object doesn't exist.")
     private String description;
 
+    @JsonProperty("location")
+    @JsonPropertyDescription("Field that threw the exception (if field validation)")
     @XmlElement
-    @ApiModelProperty(required = false, value = "Field that threw the exception (if field validation)", example = "userEmailTxtbox")
+    @ApiModelProperty(required = false, value = "Field that threw the exception (if field validation).", example = "userEmailTxtbox")
     private String location;
 
+    @JsonProperty("technicalDetails")
+    @JsonPropertyDescription("Technical details for exception.")
     @XmlElement
-    @ApiModelProperty(required = false, value = "technical details for exceptions. Not returned to non-technical end users.", example = "NullPointerException: userEmailTxtbox cannot be null.")
+    @ApiModelProperty(required = false, value = "Technical details for exception. Not returned to non-technical end users.", example = "NullPointerException: userEmailTxtbox cannot be null.")
     private String technicalDetails;
 
+    @JsonProperty("moreInfo")
+    @JsonPropertyDescription("Extra information to be returned with the exception.")
     @XmlElement
     @ApiModelProperty(required = false, value = "Extra information to be returned with the exception. Can be exposed to end user or not.")
     private String moreInfo;

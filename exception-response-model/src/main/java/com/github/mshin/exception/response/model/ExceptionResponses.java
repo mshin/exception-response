@@ -10,20 +10,27 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @author MunChul Shin
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 public class ExceptionResponses extends RuntimeException implements Serializable {
 
     private static final long serialVersionUID = -1038061992638912110L;
 
+    @JsonProperty("exceptionResponses")
+    @JsonPropertyDescription("A list containing 0 or more ExceptionResponse Objects.")
     @XmlElementWrapper(name = "exceptionResponses")
     @XmlElement
-    @ApiModelProperty(required = true, value = "A list containing 0 or more ExceptionResponse.")
+    @ApiModelProperty(required = true, value = "A list containing 0 or more ExceptionResponse Objects.")
     private List<ExceptionResponse> exceptionResponses = new ArrayList<>();
 
     public ExceptionResponses() {
