@@ -29,7 +29,7 @@ import io.swagger.annotations.ApiModelProperty;
     "moreInfo"
 })
 
-@XmlRootElement
+@XmlRootElement(name = "ExceptionResponse")
 @XmlAccessorType(XmlAccessType.NONE)
 public class ExceptionResponse extends RuntimeException implements Serializable {
 
